@@ -1,0 +1,34 @@
+<!doctype html>
+<title>User Story Manager</title>
+<div class="page">
+  <h1>User story manager</h1>
+</div>
+
+{% block body %}
+  <h2>User story manager - add new story</h2>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('login') }}" method=post>
+    <dl>
+      <dt>Story title:
+      <dd><input type=text name=storytitle>
+      <dt>User story:</dt>
+      <dd><input type=text  style="height:100px;width:450px" name=userstory>
+      <dt>Acceptance criteria:
+      <dd><input type=text style="height:100px;width:450px" name=acceptancecriteria>
+      <dt>Business value</dt>
+      <dd><input type=number min="100" max="1500" step="100" name=businessvalue>
+      <dt>Estimation(h)</dt>
+      <dd><input type=number min="0.5" max="40" step="0.5" name=estimation>
+      <dt>Status</dt>
+        <select>
+            <option value="Planning">Planning</option>
+            <option value="To do">To do</option>
+            <option value="In progress">In progress</option>
+            <option value="Review">Review</option>
+            <option value="Done">Done</option>
+        </select>
+      <dd><input type=submit value=Create>
+    </dl>
+  </form>
+{% endblock %}
+

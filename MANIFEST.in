@@ -1,0 +1,3 @@
+graft story_manager/templates
+include story_manager/connect_db.py
+include story_manager/models.py
