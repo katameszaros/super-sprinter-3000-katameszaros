@@ -7,12 +7,12 @@
 {% block body %}
   <h2>User story manager - add new story</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('login') }}" method=post>
+  <form action="{{ url_for('create_story') }}" method=post>
     <dl>
       <dt>Story title:
-      <dd><input type=text name=storytitle>
+      <dd><input type=text name="storytitle" value="{{ story.title }}">
       <dt>User story:</dt>
-      <dd><input type=text  style="height:100px;width:450px" name=userstory>
+      <dd><input type=text  style="height:100px;width:450px" name="userstory">
       <dt>Acceptance criteria:
       <dd><input type=text style="height:100px;width:450px" name=acceptancecriteria>
       <dt>Business value</dt>

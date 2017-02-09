@@ -2,12 +2,12 @@ from peewee import *
 from story_manager.connect_db import ConnectDatabase
 
 class Story(Model):
-    title = CharField()
-    user_story = CharField()
-    acceptance_criteria = CharField()
-    business_value = CharField()
-    estimation = CharField()
-    status = CharField()
+    title = CharField(default="")
+    user_story = CharField(default="")
+    acceptance_criteria = CharField(default="")
+    business_value = CharField(default="")
+    estimation = CharField(default="")
+    status = CharField(default="")
 
     class Meta:
         database = ConnectDatabase.db

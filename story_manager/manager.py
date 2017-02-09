@@ -37,43 +37,25 @@ def close_db(error):
 
 
 @app.route('/')
-def show_entries():
-    entries = Story.select().order_by(Story.id.desc())
-    return render_template('list.html', entries=entries)
+def show_stories():
+    stories = Story.select().order_by(Story.id.desc())
+    return render_template('list.html', stories=stories)
+
+
+@app.route('/story', methods=['GET'])
+def show_create_story_form():
+    return render_template('form.html', story=Story())
 
 
 @app.route('/story', methods=['POST'])
-def add_entry():
-    if not session.get('logged_in'):
-        abort(401)
-    new_entry = Story.create(title=request.form['title'],
-                               text=request.form['text'])
-    new_entry.save()
-    flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
+def create_story():
+    new_story = Story.create(title=request.form['storytitle']
+                             # add all fields from form
+                             )
+    new_story.save()
+    return redirect("/")
 
 
 @app.route('/story/<story_id>', methods=['GET', 'POST'])
-def login():
-    print(app.config['USERNAME'])
-    print(app.config['PASSWORD'])
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
-    return render_template('login.html', error=error)
-
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_entries'))
-
-
+def edit_story(story_id):
+    return render_template('form.html', story=Story(title="FAKE"))
