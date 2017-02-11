@@ -10,9 +10,6 @@ app = Flask(__name__)  # create the application instance :)
 app.config.from_object(__name__)  # load config from this file , flaskr.py
 
 # Load default config and override config from an environment variable
-app.config.update(dict(
-
-))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
@@ -44,18 +41,41 @@ def show_stories():
 
 @app.route('/story', methods=['GET'])
 def show_create_story_form():
-    return render_template('form.html', story=Story())
+    return render_template('create.html', story=Story())
 
 
 @app.route('/story', methods=['POST'])
 def create_story():
-    new_story = Story.create(title=request.form['storytitle']
-                             # add all fields from form
+    new_story = Story.create(title=request.form['title'],
+                             user_story=request.form['user_story'],
+                             acceptance_criteria=request.form['acceptance_criteria'],
+                             business_value=request.form['business_value'],
+                             estimation=request.form['estimation'],
+                             status=request.form['status']
                              )
     new_story.save()
     return redirect("/")
 
 
-@app.route('/story/<story_id>', methods=['GET', 'POST'])
-def edit_story(story_id):
-    return render_template('form.html', story=Story(title="FAKE"))
+@app.route('/story/<story_id>', methods=['GET'])
+def show_update_story_form(story_id):
+    story = Story.select().where(Story.id == story_id).get()
+    return render_template('update.html', story=story)
+
+
+@app.route('/story/<story_id>', methods=['POST'])
+def update_story(story_id):
+    Story.update(title=request.form['title'],
+                 user_story=request.form['user_story'],
+                 acceptance_criteria=request.form['acceptance_criteria'],
+                 business_value=request.form['business_value'],
+                 estimation=request.form['estimation'],
+                 status=request.form['status'])\
+        .where(Story.id == story_id).execute()
+    return redirect("/")
+
+
+@app.route('/story/delete/<story_id>', methods=['GET'])
+def delete_story(story_id):
+    Story.delete().where(Story.id == story_id).execute()
+    return redirect("/")

@@ -1,33 +1,90 @@
 <!doctype html>
 <title>Super Sprinter 3000</title>
 <div class="page">
+    <head>
+        <style>
+            body {
+                font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            table, th{
+                border: 0px solid black;
+                padding: 5px;
+                background: #CCC;
+            }
+
+            table, td{
+                border: 0px solid black;
+                border-right: #CCC 1px solid;
+                border-left: #CCC 1px solid;
+                padding: 2px;
+                text-align: center;
+            }
+
+            table tr:nth-child(2n) {
+                background-color: #EEE;
+            }
+
+            .icon {
+                width: 25px;
+                height: 25px;
+            }
+        </style>
+
     <h1>User story manager
         <form method="GET" action="{{ url_for('show_create_story_form') }}">
             <input type=submit value=Create>
         </form>
     </h1>
 
+    </head>
+
 </div>
 
 {% block body %}
 
-<table>
-{% for story in stories %}
-<TR>
-   <TD class="c1">{{ story.id }}</TD>
-   <TD class="c2">{{story.title}}</TD>
-    <TD class="c2"><a href="{{ url_for('edit_story', story_id=story.id) }}">Edit</a></TD>
-{#   <TD class="c3">{{item.id}}</TD>
-   <TD class="c4"><SPAN>{{item.position}}</SPAN></TD>
-   <TD class="c5"><SPAN>{{item.status}}</SPAN></TD>
-   <TD class="c2">{{item.date}}</TD>
-   <TD class="c3">{{item.id}}</TD>
-   <TD class="c4"><SPAN>{{item.position}}</SPAN></TD>
-   <TD class="c5"><SPAN>{{item.status}}</SPAN></TD>#}
-{# edit link:  #}
+    <body>
+    <table width="80%">
+      <tr>
+          <th>Story id</th>
+          <th>Story title</th>
+          <th>User story</th>
+          <th>Acceptance criteria</th>
+          <th>Business value</th>
+          <th>Estimation</th>
+          <th>Status</th>
+          <th>Edit</th>
+          <th>Delete</th>
+      </tr>
+    {% for story in stories %}
+    <TR>
+        <TD class="c1">{{story.id }}</TD>
+        <TD class="c2">{{story.title}}</TD>
+        <TD class="c3">{{story.user_story}}</TD>
+        <TD class="c4">{{story.acceptance_criteria}}</TD>
+        <TD class="c5">{{story.business_value}}</TD>
+        <TD class="c6">{{story.estimation}}</TD>
+        <TD class="c7">{{story.status}}</TD>
+        <TD class="c8">
+            <a href="{{ url_for('show_update_story_form', story_id=story.id) }}">
+                <IMG src="{{ url_for('static', filename='edit.png') }}" class="icon"/>
+            </a>
+        </TD>
+        <TD class="c9">
+            <a href="{{ url_for('delete_story', story_id=story.id) }}">
+                <IMG src="{{ url_for('static', filename='delete.png') }}" class="icon"/>
+            </a>
+        </TD>
 
-</TR>
-{% endfor %}
-</table>
+    </TR>
+    {% endfor %}
+    </table>
+    </body>
 
 {% endblock %}
+</html>
+

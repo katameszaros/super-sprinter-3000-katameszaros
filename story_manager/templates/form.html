@@ -5,29 +5,33 @@
 </div>
 
 {% block body %}
-  <h2>User story manager - add new story</h2>
+  <h2>User story manager - {% block submit %}add new story{% endblock %}</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('create_story') }}" method=post>
+  <form action="{% block formAction %}{% endblock %}" method=post>
     <dl>
-      <dt>Story title:
-      <dd><input type=text name="storytitle" value="{{ story.title }}">
+      <dt>Story title:</dt>
+      <dd><input type=text name="title" value="{{ story.title }}">
       <dt>User story:</dt>
-      <dd><input type=text  style="height:100px;width:450px" name="userstory">
-      <dt>Acceptance criteria:
-      <dd><input type=text style="height:100px;width:450px" name=acceptancecriteria>
+      <dd><input type=text style="height:100px;width:450px" name="user_story" value="{{ story.user_story }}">
+      <dt>Acceptance criteria:</dt>
+      <dd><input type=text style="height:100px;width:450px" name="acceptance_criteria" value="{{ story.acceptance_criteria }}">
       <dt>Business value</dt>
-      <dd><input type=number min="100" max="1500" step="100" name=businessvalue>
+      <dd><input type=number min="100" max="1500" step="100" name="business_value" value="{{ story.business_value }}">
       <dt>Estimation(h)</dt>
-      <dd><input type=number min="0.5" max="40" step="0.5" name=estimation>
+      <dd><input type=number min="0.5" max="40" step="0.5" name="estimation" value="{{ story.estimation }}">
       <dt>Status</dt>
-        <select>
-            <option value="Planning">Planning</option>
-            <option value="To do">To do</option>
-            <option value="In progress">In progress</option>
-            <option value="Review">Review</option>
-            <option value="Done">Done</option>
+        <select name="status" value="{{ story.status }}">
+            {% set options = ["Planning", "To do", "In progress", "Review", "Done"] %}
+            {% for option in options %}
+                <option value="{{ option }}"
+                    {% if option==story.status %} selected="selected"{% endif %}
+                    >{{ option }}</option>
+            {% endfor %}
         </select>
-      <dd><input type=submit value=Create>
+      <dd><input type=submit value={% block submitValue %}{% endblock %}>
+
+
+
     </dl>
   </form>
 {% endblock %}

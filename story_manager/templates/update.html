@@ -1,0 +1,8 @@
+{% extends "form.html" %}
+
+{% block submit %}update story{% endblock %}
+
+{% block submitValue %}Update{% endblock %}
+
+{% block formAction %}{{ url_for('update_story', story_id=story.id) }}{% endblock %}
+
