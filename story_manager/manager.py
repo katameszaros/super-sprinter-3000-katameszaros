@@ -1,5 +1,3 @@
-import os
-from peewee import *
 from story_manager.connect_db import ConnectDatabase
 from story_manager.models import Story, Status
 from flask import Flask, request, session, g, redirect, url_for, abort, \
@@ -10,7 +8,7 @@ app.config.from_object(__name__)  # load config from this file , flaskr.py
 
 # Load default config and override config from an environment variable
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
-app.secret_key = 'some_secret'
+app.secret_key = 'Some_secret'
 
 
 def init_db():
@@ -27,6 +25,7 @@ def initdb_command():
     init_db()
     Status.create_defaults()
     print('Initialized the database.')
+
 
 @app.teardown_appcontext
 def close_db(error):

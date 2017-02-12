@@ -25,10 +25,11 @@ class Status(BaseModel):
         Status(status_text=Status.REVIEW).save()
         Status(status_text=Status.DONE).save()
 
+
 class Story(BaseModel):
     title = CharField(default="")
-    user_story = CharField(default="",max_length=10000)
-    acceptance_criteria = CharField(default="",max_length=10000)
+    user_story = CharField(default="", max_length=10000)
+    acceptance_criteria = CharField(default="", max_length=10000)
     business_value = CharField(default="")
     estimation = CharField(default="")
     status = ForeignKeyField(Status)
@@ -36,6 +37,3 @@ class Story(BaseModel):
     @classmethod
     def empty(cls):
         return Story(status=Status.select().where(Status.status_text == Status.PLANNING))
-
-
-

@@ -1,7 +1,7 @@
 <!doctype html>
-<title>Super Sprinter 3000</title>
-<div class="page">
+<html>
     <head>
+        <title>Super Sprinter 3000</title>
         <style>
             body {
                 font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
@@ -10,6 +10,7 @@
 
             table {
                 border-collapse: collapse;
+                width: 95%;
             }
 
             table, th{
@@ -30,8 +31,6 @@
                 padding: 5px;
             }
 
-
-
             table tr:nth-child(2n) {
                 background-color: #EEE;
             }
@@ -45,27 +44,18 @@
                 height: 25px;
             }
         </style>
-
-
     </head>
-
-</div>
-
-{% block body %}
-
     <body>
-
-        <h1>User story manager
-            <form method="GET" action="{{ url_for('show_create_story_form') }}">
-                <input type=submit id="create" value=Create>
-            </form>
-        </h1>
+        <h1>User story manager</h1>
+        <form method="GET" action="{{ url_for('show_create_story_form') }}">
+            <input type=submit id="create" value=Create>
+        </form>
 
         {% for message in get_flashed_messages() %}
             <div class=flash>{{ message }}</div>
         {% endfor %}<br>
 
-        <table width="95%">
+        <table>
             <tr>
                 <th>Story id</th>
                 <th>Story title</th>
@@ -77,32 +67,28 @@
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
-        {% for story in stories %}
-        <tr>
-            <td class="c1">{{story.id }}</td>
-            <td class="c2">{{story.title}}</td>
-            <td class="c3">{{story.user_story}}</td>
-            <td class="c4">{{story.acceptance_criteria}}</td>
-            <td class="c5">{{story.business_value}}</td>
-            <td class="c6">{{story.estimation}}</td>
-            <td class="c7">{{story.status.status_text}}</td>
-            <td class="c8">
-                <a href="{{ url_for('show_update_story_form', story_id=story.id) }}">
-                    <img src="{{ url_for('static', filename='edit.png') }}" class="icon"/>
-                </a>
-            </td>
-            <td class="c9">
-                <a href="{{ url_for('delete_story', story_id=story.id) }}" onclick="return confirm('Do you really want to delete this story?')">
-                    <img src="{{ url_for('static', filename='delete.png') }}" class="icon"/>
-                </a>
-            </td>
-
-        </tr>
-        {% endfor %}
+            {% for story in stories %}
+            <tr>
+                <td class="c1">{{story.id }}</td>
+                <td class="c2">{{story.title}}</td>
+                <td class="c3">{{story.user_story}}</td>
+                <td class="c4">{{story.acceptance_criteria}}</td>
+                <td class="c5">{{story.business_value}}</td>
+                <td class="c6">{{story.estimation}}</td>
+                <td class="c7">{{story.status.status_text}}</td>
+                <td class="c8">
+                    <a href="{{ url_for('show_update_story_form', story_id=story.id) }}">
+                        <img src="{{ url_for('static', filename='edit.png') }}" class="icon" alt="edit"/>
+                    </a>
+                </td>
+                <td class="c9">
+                    <a href="{{ url_for('delete_story', story_id=story.id) }}" onclick="return confirm('Do you really want to delete this story?')">
+                        <img src="{{ url_for('static', filename='delete.png') }}" class="icon" alt="delete"/>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
         </table>
     </body>
-
-{% endblock %}
-
 </html>
 

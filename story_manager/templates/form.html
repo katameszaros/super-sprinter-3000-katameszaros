@@ -1,62 +1,59 @@
 <!doctype html>
+<html>
+    <head>
+        <title>User Story Manager</title>
+        <style>
+            label {
+                display: inline-block;
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+            }
 
-<head>
-    <title>User Story Manager</title>
-    <style>
-        label {
-            display: inline-block;
-            width: 200px;
-            text-align: right;
-            vertical-align: top;
-        }
+            input {
+                width: 450px;
+            }
 
-        input {
-            width: 450px;
-        }
+            .free_text {
+                height:100px;
+                width:450px
+            }
 
-        .free_text {
-            height:100px;
-            width:450px
-        }
+            .small_input {
+                width: 100px;
+            }
 
-        .small_input {
-            width: 100px;
-        }
+            #submit {
+                margin-left: 200px;
+            }
 
-        #submit {
-            margin-left: 200px;
-        }
+        </style>
+    </head>
 
-
-    </style>
-</head>
-{% block body %}
-
-    <div class="page">
+    <body>
         <h1>User story manager</h1>
-    </div>
-
-  <h2>User story manager - {% block submit %}{% endblock %}</h2>
-  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{% block formAction %}{% endblock %}" method=post onsubmit="return confirm('{% block submitAction %}{% endblock %}')">
-        <label for="title">Story title:</label>
-        <input type=text name="title" id="title" value="{{ story.title }}"><br>
-        <label for="user_story">User story:</label>
-        <textarea class="free_text" name="user_story" id="user_story">{{ story.user_story }}</textarea><br>
-        <label for="acceptance_criteria">Acceptance criteria:</label>
-        <textarea class="free_text" name="acceptance_criteria" id="acceptance_criteria">{{ story.acceptance_criteria }}</textarea><br>
-        <label for="business_value">Business value</label>
-        <input class="small_input" type=number min="100" max="1500" step="100" name="business_value" id="business_value" value="{{ story.business_value }}"></br>
-        <label for="estimation">Estimation(h)</label>
-        <input class="small_input" type=number min="0.5" max="40" step="0.5" name="estimation" id="estimation" value="{{ story.estimation }}"></br>
-        <label for="status">Status</label>
-        <select name="status" id="status">
-            {% for option in statuses %}
-                <option value="{{ option.id }}"
-                    {% if option.id==story.status.id %} selected="selected"{% endif %}
+        <h2>User story manager - {% block submit %}{% endblock %}</h2>
+        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+        <form action="{% block formAction %}{% endblock %}" method=post onsubmit="return confirm('{% block submitAction %}{% endblock %}')">
+            <label for="title">Story title:</label>
+            <input type=text name="title" id="title" value="{{ story.title }}"><br>
+            <label for="user_story">User story:</label>
+            <textarea class="free_text" name="user_story" id="user_story">{{ story.user_story }}</textarea><br>
+            <label for="acceptance_criteria">Acceptance criteria:</label>
+            <textarea class="free_text" name="acceptance_criteria" id="acceptance_criteria">{{ story.acceptance_criteria }}</textarea><br>
+            <label for="business_value">Business value</label>
+            <input class="small_input" type=number min="100" max="1500" step="100" name="business_value" id="business_value" value="{{ story.business_value }}"><br>
+            <label for="estimation">Estimation(h)</label>
+            <input class="small_input" type=number min="0.5" max="40" step="0.5" name="estimation" id="estimation" value="{{ story.estimation }}"><br>
+            <label for="status">Status</label>
+            <select name="status" id="status">
+                {% for option in statuses %}
+                    <option value="{{ option.id }}"
+                            {% if option.id==story.status.id %} selected="selected"{% endif %}
                     >{{ option.status_text }}</option>
-            {% endfor %}
-        </select><br><br>
-      <input class="small_input" id="submit" type=submit value={% block submitValue %}{% endblock %}>
-  </form>
-{% endblock %}
+                {% endfor %}
+            </select><br><br>
+            <input class="small_input" id="submit" type=submit value={% block submitValue %}{% endblock %}>
+        </form>
+    </body>
+</html>
